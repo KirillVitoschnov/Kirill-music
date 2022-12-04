@@ -1,16 +1,17 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-@import "main";
-@import "sidebar";
-@import "content";
-@import "player";
+@import "main/index";
+@import "sidebar/index";
+@import "content/index";
+@import "player/index";
+@import "login/index";
+@import "profile/index";
 
 .navbar {
     display: none!important;

@@ -1,6 +1,93 @@
-.content{
-    height: 100%;
-    background: linear-gradient(113.83deg, #121212 0.59%, #121212 99.74%);
-    width: 80%;
-    min-height: 100vh;
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: linear-gradient(113.83deg, #121212 0.59%, #121212 99.74%);
+  width: 100%;
+  min-height: 100vh;
+}
+
+.content-container {
+  margin: 1rem 32px auto;
+  height: 100%;
+}
+
+.wrapper-profile-header {
+  display: flex;
+  margin: 32px;
+}
+
+.button-header {
+  width: 32px;
+  height: 32px;
+  background: #030303;
+  border-radius: 100px;
+  display: flex;
+  margin-right: 8px;
+
+  svg {
+    margin: auto;
+  }
+}
+
+.header-auth {
+  height: 32px;
+  background-color: white;
+  display: flex;
+  padding: 0 10px;
+  line-height: 32px;
+  text-decoration: none;
+  color: #030303;
+  border-radius: 32px;
+}
+
+.header-auth:hover {
+  color: #030303;
+}
+
+.header-auth:last-child {
+  margin-left: 1rem;
+}
+
+.next {
+  transform: rotate(180deg);
+  margin: 0;
+}
+
+.user-signin {
+  display: flex;
+  margin-left: auto;
+}
+
+.user-profile-wrapper {
+  text-decoration: none;
+  padding: 0 8px;
+  display: flex;
+  border-radius: 27px;
+  background: #252525;
+  width: 203px;
+  height: 40px;
+  margin-left: auto;
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 147px;
+    display: block;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    margin: auto 0 auto 8px;
+    color: #a7a7a7;
+
+  }
+}
+
+.user-image {
+  margin: auto 0;
+  pointer-events: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 100px;
 }
