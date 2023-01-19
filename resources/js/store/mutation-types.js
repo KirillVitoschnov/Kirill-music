@@ -9,3 +9,8 @@ export const UPDATE_USER = 'UPDATE_USER'
 
 // lang.js
 export const SET_LOCALE = 'SET_LOCALE'
+
+
+//music.js
+export const FETCH_MUSIC = 'FETCH_MUSIC'
+export const SET_MUSIC_LIST = 'SET_MUSIC_LIST'

@@ -4,7 +4,7 @@
     <transition name="page" mode="out-in">
       <component :is="layout" v-if="layout"/>
     </transition>
-    <v-player v-show="showPlayer"></v-player>
+    <v-player v-if="showPlayer"></v-player>
   </div>
 </template>
 

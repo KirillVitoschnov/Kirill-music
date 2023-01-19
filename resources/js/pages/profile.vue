@@ -16,10 +16,17 @@
           </tr>
           <tr>
             <td>Дата рождения</td>
-            <td> {{ user.birthdate }}</td>
+            <td> {{ user.birthdate | Dateify }}</td>
+          </tr>
+          <tr>
+            <td>Редактировать</td>
+            <td>
+              <button @click="$bvModal.show('profile-edit')">Редактировать профиль</button>
+            </td>
           </tr>
 
           </tbody>
+
           <div class="profile-photo-wrapper">
             <button class="del-avatar" @click="image='';update()">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -36,6 +43,9 @@
           </div>
         </div>
         <button @click="logout" class="logout-profile">Выйти</button>
+        <b-modal id="profile-edit" title="BootstrapVue">
+          <p class="my-4">Hello from modal!</p>
+        </b-modal>
       </div>
     </v-content>
   </div>
@@ -71,6 +81,20 @@ export default {
     this.form.keys().forEach(key => {
       this.form[key] = this.user[key]
     })
+  },
+  filters: {
+    Dateify: function (value) {
+      let data;
+      let d = new Date(value)
+      if (d.getMonth() < 9) {
+        data = d.getDate() + "." + 0 + (+d.getMonth() + 1) + "." + d.getFullYear();
+      } else {
+        data = d.getDate() + "." + (+d.getMonth() + 1) + "." + d.getFullYear();
+      }
+
+
+      return data
+    }
   },
   methods: {
     async logout() {

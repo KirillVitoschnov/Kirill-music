@@ -1,0 +1,33 @@
+.music {
+  &-item {
+    margin-bottom: 10px;
+    padding: 10px ;
+    cursor: pointer;
+    color: #a7a7a7;
+    display: flex;
+    justify-content: space-between;
+border-radius: 10px;
+    &:hover {
+      background-color: #3a3a3a;
+    }
+  }
+
+  &-logo {
+    height: 65px;
+    width: 65px;
+  }
+
+  &-data {
+    width: calc(50% - 65px);
+    margin: auto 0 auto 25px;
+  }
+
+  &-action {
+    margin: auto 0 auto auto;
+  }
+
+  &-time {
+    margin: auto 0 auto auto;
+  }
+}
+

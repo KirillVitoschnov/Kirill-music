@@ -1,9 +1,98 @@
-.player-wrapper{
-    position: fixed;
-    background: #282828;
-    box-shadow: 0px -1px 0px #000000;
+@mixin no-border {
+  width: max-content !important;
+  &:hover {
+    border: unset !important;
+    background-color: initial !important;
+    border-radius: unset !important;
+  }
+}
+
+.player-wrapper {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  background: #282828;
+  box-shadow: 0px -1px 0px #000000;
+  width: 100%;
+  height: 96px;
+  bottom: 0;
+  z-index: 999;
+}
+
+.player-scale {
+  width: 100%;
+
+  input {
     width: 100%;
-    height: 96px;
-    bottom: 0;
-z-index: 999;
+  }
+}
+
+.player-album {
+  margin: 0 20px;
+
+  @include no-border
+}
+
+.player-track-info {
+  color: #a7a7a7;
+  width: max-content !important;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    border: unset !important;
+    background-color: initial !important;
+    border-radius: unset !important;
+  }
+}
+
+.volume {
+  cursor: pointer;
+  color: #a7a7a7;
+  width: max-content !important;
+  @include no-border
+}
+
+.time-line {
+  color: #a7a7a7;
+  margin-left: auto;
+  margin-right: 20px;
+  @include no-border;
+
+  span {
+    display: block;
+    margin: auto 0;
+  }
+}
+
+.player-buttons {
+  width: 100%;
+  display: flex;
+  margin: 5px 0 auto;
+  padding: 0 20px;
+
+  div:hover {
+    background-color: #3a3a3a;
+    border: 1px solid #a7a7a7;
+    border-radius: 10px;
+  }
+
+  div {
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+
+    svg {
+      fill: white;
+      margin: auto 0;
+
+      g {
+        opacity: 0.5;
+      }
+    }
+
+  }
 }

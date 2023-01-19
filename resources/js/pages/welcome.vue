@@ -1,7 +1,9 @@
 <template>
   <div class="main-wrapper">
     <v-sidebar></v-sidebar>
-    <v-content></v-content>
+    <v-content>
+      <music-list-item v-for="music in musicList.data" :music="music" :key="music.id"></music-list-item>
+    </v-content>
   </div>
 
 </template>
@@ -23,7 +25,12 @@ export default {
     title: window.config.appName
   }),
 
+  async mounted() {
+    await this.$store.dispatch('music/fetchMusic')
+
+  },
   computed: mapGetters({
+    musicList: 'music/getMusicList',
     authenticated: 'auth/check'
   })
 }
