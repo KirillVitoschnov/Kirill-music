@@ -13,7 +13,7 @@ class MusicController extends Controller
 {
     public function index()
     {
-        $music = Music::paginate(100);
+        $music = Music::all();
         return response()->json(['music' => $music], 200);
     }
 

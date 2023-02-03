@@ -66,6 +66,7 @@
 }
 
 .player-buttons {
+  user-select: none;
   width: 100%;
   display: flex;
   margin: 5px 0 auto;

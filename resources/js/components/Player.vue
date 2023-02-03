@@ -1,7 +1,7 @@
 <template>
   <div class="player-wrapper">
     <div class="player-scale">
-      <input type="range" v-model="audioTime" @input="seekAudio" min="0" :max="Math.round(audioDuration)">
+      <input type="range" v-model="audioTime" @input.stop="seekAudio()" min="0" :max="Math.round(audioDuration)">
     </div>
     <audio ref="audio" :src="`/storage/${audioSrc}`" @timeupdate="updateTime"></audio>
     <div class="player-buttons">
@@ -44,7 +44,25 @@
           </g>
         </svg>
       </div>
-      <button v-if="false" @click="repeatAudio()">Repeat</button>
+      <div @click="repeatAudio()" v-if="isRepeat">
+        <svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <g fill="white">
+            <path clip-rule="evenodd"
+                  d="M12.48 9.13a.9.9 0 0 1 .42.77v4.2a.9.9 0 0 1-1.8 0v-2.74a.9.9 0 0 1-.8-1.6l1.3-.67a.9.9 0 0 1 .88.04z"
+                  fill-rule="evenodd"></path>
+            <path
+              d="M2 12a5.9 5.9 0 0 1 5.9-5.9h10.03l-.56-.56a.9.9 0 1 1 1.27-1.28l2.1 2.1a.9.9 0 0 1 0 1.28l-2.1 2.1a.9.9 0 0 1-1.27-1.28l.56-.56H7.91A4.1 4.1 0 0 0 3.8 12v.1a.9.9 0 0 1-1.8 0zm19.1-1c.5 0 .9.4.9.9v.1a5.9 5.9 0 0 1-5.9 5.9H6.07l.57.56a.9.9 0 1 1-1.28 1.28l-2.1-2.1a.9.9 0 0 1 0-1.28l2.1-2.1a.9.9 0 0 1 1.28 1.28l-.57.56H16.1a4.1 4.1 0 0 0 4.1-4.1v-.1c0-.5.4-.9.9-.9z"></path>
+          </g>
+        </svg>
+      </div>
+      <div @click="repeatAudio()" v-if="!isRepeat">
+        <svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <g fill="white">
+            <path
+              d="M2 12a5.9 5.9 0 0 1 5.9-5.9h10.03l-.56-.56a.9.9 0 1 1 1.27-1.28l2.1 2.1a.9.9 0 0 1 0 1.28l-2.1 2.1a.9.9 0 0 1-1.27-1.28l.56-.56H7.91A4.1 4.1 0 0 0 3.8 12v.1a.9.9 0 0 1-1.8 0zm19.1-1c.5 0 .9.4.9.9v.1a5.9 5.9 0 0 1-5.9 5.9H6.07l.57.56a.9.9 0 1 1-1.28 1.28l-2.1-2.1a.9.9 0 0 1 0-1.28l2.1-2.1a.9.9 0 0 1 1.28 1.28l-.57.56H16.1a4.1 4.1 0 0 0 4.1-4.1v-.1c0-.5.4-.9.9-.9z"></path>
+          </g>
+        </svg>
+      </div>
       <div class="player-album">
         <img class="music-logo_url" :src="`${currentTrack.logo_url}`">
       </div>
@@ -85,37 +103,53 @@ export default {
     }
   },
   async mounted() {
-    this.$refs.audio.volume = this.volume / 100;
     await this.$store.dispatch('music/fetchMusic')
-    this.audioSrc = this.musicList.data[0].path;
-    this.audioDuration = this.musicList.data[0].seconds;
-    this.currentTrack = this.musicList.data[0]
-    if ('mediaSession' in navigator) {
-      navigator.mediaSession.setActionHandler('play', this.playAudio);
-      navigator.mediaSession.setActionHandler('pause', this.pauseAudio);
-      navigator.mediaSession.setActionHandler('previoustrack', this.prevTrack);
-      navigator.mediaSession.setActionHandler('nexttrack', this.nextTrack);
-      navigator.mediaSession.metadata = new MediaMetadata({
-        title: this.musicList.data[0].title,
-        artist: this.musicList.data[0].artist,
-        artwork: [
-          {
-            "sizes": "160x160",
-            "src": `${this.musicList.data[0].logo_url}`,
-            "type": ""
-          }
-        ]
-      });
-    }
+    this.$refs.audio.volume = this.volume / 100;
+    this.audioSrc = this.musicList[0].path;
+    this.audioDuration = this.musicList[0].seconds;
+    this.currentTrack = this.musicList[0]
+    this.setMediaSession(this.musicList[0])
   },
   watch: {
-    'currentTime'() {
-      if (this.currentTime == this.duration) {
-        this.nextTrack()
+    'play'() {
+      if (!this.play) {
+        this.$refs.audio.pause();
+      } else {
+        this.$refs.audio.play();
+        this.$refs.audio.oncanplaythrough = () => {
+          this.$refs.audio.play();
+        };
       }
+    },
+    'currentTime'() {
+      if (!this.isRepeat) {
+        if (this.currentTime >= this.duration) {
+          this.nextTrack()
+        }
+      }
+
     }
   },
   methods: {
+    setMediaSession(track) {
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.setActionHandler('play', this.playAudio);
+        navigator.mediaSession.setActionHandler('pause', this.pauseAudio);
+        navigator.mediaSession.setActionHandler('previoustrack', this.prevTrack);
+        navigator.mediaSession.setActionHandler('nexttrack', this.nextTrack);
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: track.title,
+          artist: track.artist,
+          artwork: [
+            {
+              "sizes": "160x160",
+              "src": `${track.logo_url}`,
+              "type": ""
+            }
+          ]
+        });
+      }
+    },
     repeatAudio() {
       this.isRepeat = !this.isRepeat;
       this.$refs.audio.loop = this.isRepeat;
@@ -128,12 +162,12 @@ export default {
       this.audioTime = 0
       this.audioDuration = 0
       this.currentTime = 0
-      let currentIndex = this.musicList.data.findIndex(track => track.path === this.audioSrc);
+      let currentIndex = this.musicList.findIndex(track => track.path === this.audioSrc);
       let nextIndex = currentIndex + 1;
-      if (nextIndex >= this.musicList.data.length) {
+      if (nextIndex >= this.musicList.length) {
         nextIndex = 0;
       }
-      this.changeTrack(this.musicList.data[nextIndex]);
+      this.changeTrack(this.musicList[nextIndex]);
     },
     prevTrack() {
       if (this.audioTime > 5) {
@@ -145,16 +179,17 @@ export default {
       this.audioTime = 0
       this.audioDuration = 0
       this.currentTime = 0
-      let currentIndex = this.musicList.data.findIndex(track => track.path === this.audioSrc);
+      let currentIndex = this.musicList.findIndex(track => track.path === this.audioSrc);
       let prevIndex = currentIndex - 1;
       if (prevIndex < 0) {
-        prevIndex = this.musicList.data.length - 1;
+        prevIndex = this.musicList.length - 1;
       }
-      this.changeTrack(this.musicList.data[prevIndex]);
+      this.changeTrack(this.musicList[prevIndex]);
     },
     playAudio() {
       this.firstPlayed = true
       this.play = true
+      this.$refs.audio.currentTime = this.audioTime;
       this.$refs.audio.play();
       this.$refs.audio.oncanplaythrough = () => {
         this.$refs.audio.play();
@@ -169,29 +204,17 @@ export default {
       this.currentTime = this.formatTime(this.audioTime);
     },
     seekAudio() {
-      if (this.firstPlayed) {
-        this.play = true
+      this.currentTime = this.formatTime(this.audioTime);
+      if (this.play) {
+        this.$refs.audio.currentTime = this.audioTime;
       }
-      this.$refs.audio.currentTime = this.audioTime;
     },
     changeTrack(track) {
       this.currentTrack = track
       this.audioSrc = track.path;
       this.audioDuration = track.seconds;
       this.playAudio()
-      if ('mediaSession' in navigator) {
-        navigator.mediaSession.metadata = new MediaMetadata({
-          title: track.title,
-          artist: track.artist,
-          artwork: [
-            {
-              "sizes": "160x160",
-              "src": `${track.logo_url}`,
-              "type": ""
-            }
-          ]
-        });
-      }
+      this.setMediaSession(track)
 
 
     },
