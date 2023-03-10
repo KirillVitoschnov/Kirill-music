@@ -14,8 +14,8 @@ class AddColumnsImgBirthdateToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->timestamp('birthdate');
-            $table->string('image_url');
+            $table->timestamp('birthdate')->nullable();
+            $table->string('image_url')->nullable();
         });
     }
 

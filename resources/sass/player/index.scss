@@ -49,8 +49,10 @@
 .volume {
   cursor: pointer;
   color: #a7a7a7;
-  width: max-content !important;
-  @include no-border
+  @include no-border;
+  input{
+    width:50px!important;
+  }
 }
 
 .time-line {

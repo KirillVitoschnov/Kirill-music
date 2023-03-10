@@ -2,7 +2,7 @@
   <div class="main-wrapper">
     <v-sidebar></v-sidebar>
     <v-content>
-      <music-list-item v-for="music in musicList" :music="music" :key="music.id"></music-list-item>
+      <music-list-item @setTrack="updateTrack" v-for="music in musicList" :music="music" :key="music.id"></music-list-item>
     </v-content>
   </div>
 
@@ -24,6 +24,12 @@ export default {
   data: () => ({
     title: window.config.appName
   }),
+
+  methods: {
+    updateTrack(track) {
+      this.SET_MUSIC_LIST(this.musicList);
+    }
+  },
 
   computed: mapGetters({
     musicList: 'music/getMusicList',

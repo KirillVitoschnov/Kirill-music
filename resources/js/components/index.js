@@ -9,6 +9,7 @@ import Content from './Content'
 import NavbarContent from "./NavbarContent";
 import {HasError, AlertError, AlertSuccess} from 'vform/components/bootstrap5'
 import MusicListItem from "./MusicListItem";
+import PlaylistCard from "./playlistCard";
 
 [
   Content,
@@ -22,7 +23,8 @@ import MusicListItem from "./MusicListItem";
   AlertError,
   AlertSuccess,
   NavbarContent,
-  MusicListItem
+  MusicListItem,
+  PlaylistCard
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })

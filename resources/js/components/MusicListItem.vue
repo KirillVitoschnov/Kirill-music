@@ -1,5 +1,5 @@
 <template>
-  <div class="music-item">
+  <div @click="onTrackClick" class="music-item">
     <img class="music-logo" :src="`${music.logo_url}`">
     <div class="music-data">
       <div>{{ music.title }}</div>
@@ -13,6 +13,11 @@
 export default {
   name: 'MusicListItem',
   props: ['music'],
+  methods: {
+    onTrackClick() {
+      this.$emit('setTrack', this.music.id);
+    }
+  },
   created() {
 
   }

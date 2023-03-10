@@ -111,6 +111,9 @@ export default {
     this.setMediaSession(this.musicList[0])
   },
   watch: {
+    'audioTime'(){
+      this.updateTime()
+    },
     'play'() {
       if (!this.play) {
         this.$refs.audio.pause();
@@ -215,8 +218,6 @@ export default {
       this.audioDuration = track.seconds;
       this.playAudio()
       this.setMediaSession(track)
-
-
     },
     formatTime(time) {
       let minutes = Math.floor(time / 60);

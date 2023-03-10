@@ -4,7 +4,7 @@
     <transition name="page" mode="out-in">
       <component :is="layout" v-if="layout"/>
     </transition>
-    <v-player v-if="showPlayer"></v-player>
+    <v-player></v-player>
   </div>
 </template>
 
@@ -47,14 +47,6 @@ export default {
 
   mounted() {
     this.$loading = this.$refs.loading
-  },
-  watch: {
-    '$route'() {
-      let enableRouts = [
-        '/'
-      ]
-      this.showPlayer = enableRouts.includes(document.location.pathname)
-    }
   },
 
   methods: {

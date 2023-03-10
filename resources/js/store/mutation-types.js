@@ -14,3 +14,5 @@ export const SET_LOCALE = 'SET_LOCALE'
 //music.js
 export const FETCH_MUSIC = 'FETCH_MUSIC'
 export const SET_MUSIC_LIST = 'SET_MUSIC_LIST'
+export const SET_USER_PLAY_LISTS = 'SET_USER_PLAY_LISTS'
+export const FETCH_USER_PLAY_LISTS = 'FETCH_USER_PLAY_LISTS'

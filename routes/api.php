@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Music\MusicController;
+use App\Http\Controllers\Music\PlaylistController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +31,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/profile', [ProfileController::class, 'update']);
     Route::patch('settings/password', [PasswordController::class, 'update']);
     Route::post('music/upload', [MusicController::class, 'upload']);
-
+    Route::get('/playlists',  [PlaylistController::class, 'index']);
+    Route::post('/playlists', [PlaylistController::class, 'store']);
+    Route::post('/add-music', [PlaylistController::class, 'addMusic']);
+    Route::get('playlists/{playlist}', [PlaylistController::class,'show']);
 });
 
 Route::group(['middleware' => 'guest:api'], function () {

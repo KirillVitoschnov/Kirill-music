@@ -1,0 +1,25 @@
+.library {
+  &-title {
+    display: flex;
+    justify-content: space-between;
+  }
+  &-wrapper{
+    display: grid;
+    grid-template-columns:repeat(3, 250px);
+  }
+  &-card{
+    display: flex;
+    flex-direction: column;
+    img{
+      width: 100%;
+      height: auto;
+    }
+  }
+  &-add {
+    padding: 0;
+    border: none;
+    font: inherit;
+    background-color: transparent;
+    color: #636b6f;
+  }
+}
