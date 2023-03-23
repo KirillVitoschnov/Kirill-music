@@ -3,7 +3,7 @@
     <div class="player-scale">
       <input type="range" v-model="audioTime" @input.stop="seekAudio()" min="0" :max="Math.round(audioDuration)">
     </div>
-    <audio ref="audio" :src="`/storage/${audioSrc}`" @timeupdate="updateTime"></audio>
+    <audio  ref="audio" :src="audioSrc?`/storage/${audioSrc}`:''" @timeupdate="updateTime"></audio>
     <div class="player-buttons">
       <div @click="prevTrack()" class="player-control-back">
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="30" viewBox="0 0 14 13"

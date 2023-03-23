@@ -5,16 +5,25 @@
   }
   &-wrapper{
     display: grid;
-    grid-template-columns:repeat(3, 250px);
+    grid-template-columns: repeat(5, 1fr);
   }
   &-card{
+    cursor: pointer;
+    margin: 10px;
     display: flex;
     flex-direction: column;
     img{
+      user-select: none;
+      pointer-events: none;
       width: 100%;
       height: auto;
     }
-  }
+    span{
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 16px;
+    }
+    }
   &-add {
     padding: 0;
     border: none;
