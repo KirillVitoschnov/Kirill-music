@@ -1,20 +1,6 @@
 <template>
   <nav class="wrapper-profile-header">
 
-    <button class="button-header">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path opacity="0.7"
-              d="M12.1728 15.6L3.27344 8.00002L12.1728 0.400024L12.7266 1.04756L4.58555 8.00002L12.7266 14.9525"
-              fill="white"/>
-      </svg>
-    </button>
-    <button class="button-header next">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path opacity="0.7"
-              d="M12.1728 15.6L3.27344 8.00002L12.1728 0.400024L12.7266 1.04756L4.58555 8.00002L12.7266 14.9525"
-              fill="white"/>
-      </svg>
-    </button>
 
     <div class="user-signin" v-if="!user">
 
@@ -26,7 +12,7 @@
       </router-link>
 
     </div>
-    <svg @click="$bvModal.show('upload-music')" style="margin: auto 10px auto auto; cursor: pointer"
+    <svg v-if="user" @click="$bvModal.show('upload-music')" style="margin: auto 10px auto auto; cursor: pointer"
          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
          id="mdi-download" width="24" height="24" viewBox="0 0 24 24">
       <path fill="white" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/>
