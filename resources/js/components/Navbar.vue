@@ -6,12 +6,12 @@
       </router-link>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
-        <span class="navbar-toggler-icon"/>
+        <span class="navbar-toggler-icon" />
       </button>
 
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="navbar-nav">
-          <locale-dropdown/>
+          <locale-dropdown />
           <!-- <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
           </li> -->
@@ -27,13 +27,13 @@
             </a>
             <div class="dropdown-menu">
               <router-link :to="{ name: 'settings.profile' }" class="dropdown-item ps-3">
-                <fa icon="cog" fixed-width/>
+                <fa icon="cog" fixed-width />
                 {{ $t('settings') }}
               </router-link>
 
-              <div class="dropdown-divider"/>
+              <div class="dropdown-divider" />
               <a href="#" class="dropdown-item ps-3" @click.prevent="logout">
-                <fa icon="sign-out-alt" fixed-width/>
+                <fa icon="sign-out-alt" fixed-width />
                 {{ $t('logout') }}
               </a>
             </div>
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 import LocaleDropdown from './LocaleDropdown'
 
 export default {
@@ -75,12 +75,12 @@ export default {
   }),
 
   methods: {
-    async logout() {
+    async logout () {
       // Log out the user.
       await this.$store.dispatch('auth/logout')
 
       // Redirect to login.
-      this.$router.push({name: 'login'})
+      this.$router.push({ name: 'login' })
     }
   }
 }

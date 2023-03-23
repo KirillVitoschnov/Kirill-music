@@ -2,7 +2,6 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import * as types from '../mutation-types'
 
-
 // state
 export const state = {
   user: null,
@@ -63,7 +62,6 @@ export const actions = {
   updateUser ({ commit }, payload) {
     commit(types.UPDATE_USER, payload)
   },
-
 
   async logout ({ commit }) {
     try {

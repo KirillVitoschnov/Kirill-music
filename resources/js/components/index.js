@@ -6,10 +6,10 @@ import Checkbox from './Checkbox.vue'
 import Player from './player'
 import Sidebar from './Sidebar'
 import Content from './Content'
-import NavbarContent from "./NavbarContent";
-import {HasError, AlertError, AlertSuccess} from 'vform/components/bootstrap5'
-import MusicListItem from "./MusicListItem";
-import PlaylistCard from "./playlistCard";
+import NavbarContent from './NavbarContent'
+import { HasError, AlertError, AlertSuccess } from 'vform/components/bootstrap5'
+import MusicListItem from './MusicListItem'
+import PlaylistCard from './playlistCard';
 
 [
   Content,

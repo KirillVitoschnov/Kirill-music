@@ -30,10 +30,11 @@ class PlaylistController extends Controller
         return redirect()->back()->with('success', 'Playlist created successfully');
     }
 
-    public function addMusic(Request $request, $id)
+    public function addMusic(Request $request)
     {
+        $playlist_id = $request->input('playlist_id');
         $user = Auth::user();
-        $playlist = Playlist::where('id', $id)->where('user_id', $user->id)->first();
+        $playlist = Playlist::where('id', $playlist_id)->where('user_id', $user->id)->first();
 
         if (!$playlist) {
             return redirect()->back()->with('error', 'Playlist not found');

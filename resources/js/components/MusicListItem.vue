@@ -6,10 +6,10 @@
       <div>{{ music.artist }}</div>
     </div>
     <span class="music-action"> <b-dropdown id="dropdown-1" text="Действие">
-    <b-dropdown-item @click="download('/storage/'+music.path, music.title+' '+music.artist)">Скачать</b-dropdown-item>
-    <b-dropdown-item>Добавить в плейлист</b-dropdown-item>
-  </b-dropdown>
-  </span>
+      <b-dropdown-item @click="download('/storage/'+music.path, music.title+' '+music.artist)">Скачать</b-dropdown-item>
+      <b-dropdown-item @click="addToPlaylist">Добавить в плейлист</b-dropdown-item>
+    </b-dropdown>
+    </span>
 
     <span class="music-time">{{ music.seconds | seconds-to-minutes }}</span>
   </div>
@@ -18,30 +18,33 @@
 export default {
   name: 'MusicListItem',
   props: ['music'],
+  created () {
+
+  },
   methods: {
-    download(url, Filename) {
+    addToPlaylist () {
+      this.$emit('addToPlaylist', this.music.id);
+    },
+    download (url, Filename) {
       fetch(url)
         .then(response => response.blob())
         .then(blob => {
-          const a = document.createElement("a");
-          const url = URL.createObjectURL(blob);
-          a.href = url;
-          a.download = Filename;
-          document.body.appendChild(a);
-          a.click();
+          const a = document.createElement('a')
+          const url = URL.createObjectURL(blob)
+          a.href = url
+          a.download = Filename
+          document.body.appendChild(a)
+          a.click()
           setTimeout(() => {
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-          }, 0);
-        });
+            document.body.removeChild(a)
+            window.URL.revokeObjectURL(url)
+          }, 0)
+        })
     },
-    onTrackClick() {
-      this.$emit('setTrack', this.music.id);
+    onTrackClick () {
+      this.$emit('setTrack', this.music.id)
     }
-  },
-  created() {
-
-  },
+  }
 
 }
 </script>

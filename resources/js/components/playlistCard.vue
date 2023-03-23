@@ -7,7 +7,7 @@
 </template>
 <script>
 export default {
-  name: 'playlistCard',
-  props: ['item'],
+  name: 'PlaylistCard',
+  props: ['item']
 }
 </script>
