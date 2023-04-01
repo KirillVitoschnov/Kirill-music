@@ -91,7 +91,6 @@ export default {
       name: '',
       email: '',
       user_img: ''
-
     })
   }),
   created () {

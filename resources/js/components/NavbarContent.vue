@@ -8,11 +8,11 @@
         Регистрация
       </router-link>
     </div>
-    <svg v-if="user" id="mdi-download" style="margin: auto 10px auto auto; cursor: pointer"
+    <svg v-if="user" id="mdi-download" style="cursor: pointer"
          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
          width="24" height="24" viewBox="0 0 24 24" @click="$bvModal.show('upload-music')"
     >
-      <path fill="white" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
+      <path fill="white" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/>
     </svg>
     <router-link v-if="user" :to="{ name: 'profile' }" v class="user-profile-wrapper">
       <img class="user-image" :src="user.photo_url" alt="">

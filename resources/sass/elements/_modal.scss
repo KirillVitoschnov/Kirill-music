@@ -1,0 +1,55 @@
+.modal-content {
+  .cards-playlist-wrapper {
+    max-height: 60vh;
+    overflow-y: scroll;
+  }
+
+  .title-add-music {
+    margin-bottom: 2rem;
+  }
+
+  .form-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    width: 100%;
+    display: flex;
+  }
+
+  .input {
+    width: 75%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+
+  .btn-modal {
+    margin-left: auto;
+    width: 20%;
+    padding: 0.5rem;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .btn-modal:hover {
+    background-color: #3e8e41;
+  }
+
+  .card {
+    cursor: pointer;
+    justify-content: space-between;
+    flex-direction: initial;
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+}

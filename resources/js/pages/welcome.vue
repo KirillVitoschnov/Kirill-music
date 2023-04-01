@@ -3,36 +3,39 @@
     <v-sidebar/>
     <v-content>
       <music-list-item v-for="music in musicList" :key="music.id" :music="music" @setTrack="updateTrack"
-                       @addToPlaylist="addToPlaylist"
+                       @addToPlaylist="addToPlaylistModal"
       />
     </v-content>
-    <b-modal id="add-playlist" title="BootstrapVue">
-      <form method="post" enctype="multipart/form-data" action="/api/add-music">
+    <b-modal id="add-playlist" hide-footer hide-header>
+      <div>
         <div>
-          <div v-for="playlist in userPlaylists" :key="playlist.id" @click="selectedPlayList=playlist.id">
-            <div class="card">
-              <img v-if="playlist.musics[0]" :src="playlist.musics[0].logo_url" :alt="playlist.musics[0].title">
-              <img v-else class="music-logo" src="/images/music-logo.png">
-              <div class="info">
-                <h3>{{ playlist.name }}</h3>
-                <p>Создан: {{ playlist.created_at |date }}</p>
-                <p>Колличество песен: {{ playlist.musics_count }}</p>
+          <h2 class="title-add-music">Добавить в плейлист</h2>
+          <div class="form-container">
+            <input v-model="playListForm.name" type="text" class="input" placeholder="Введите название плейлиста">
+            <button @click="createPlaylist" class="btn-modal">Добавить</button>
+          </div>
+          <div class="cards-playlist-wrapper">
+            <div v-for="playlist in userPlaylists" :key="playlist.id" @click="addToPlaylist(playlist)">
+              <div class="card">
+                <img v-if="playlist.musics[0]" :src="playlist.musics[0].logo_url" :alt="playlist.musics[0].title">
+                <img v-else class="music-logo" src="/images/music-logo.png">
+                <div class="info">
+                  <h3>{{ playlist.name }}</h3>
+                  <p>Создан: {{ playlist.created_at |date }}</p>
+                  <p>Колличество песен: {{ playlist.musics_count }}</p>
+                </div>
               </div>
             </div>
           </div>
-          <input name="playlist_id" type="hidden" v-model="selectedPlayList">
-          <input name="music_id" type="hidden" v-model="selectedTrack">
         </div>
-        <button type="submit">
-          Загрузить
-        </button>
-      </form>
+      </div>
     </b-modal>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import Form from 'vform'
 
 export default {
   components: {},
@@ -46,15 +49,32 @@ export default {
   data: () => ({
     title: window.config.appName,
     selectedTrack: '',
-    selectedPlayList: ''
+    playListForm: new Form({
+      name: ''
+    }),
+    form: new Form({
+      music_id: '',
+      playlist_id: ''
+    })
   }),
   async mounted () {
     await this.$store.dispatch('music/fetchUserPlayLists')
   },
   methods: {
-    addToPlaylist (track) {
+    async createPlaylist () {
+      await this.playListForm.post('/api/playlists')
+      await this.$store.dispatch('music/fetchUserPlayLists')
+      this.playListForm.name = ''
+    },
+    async addToPlaylist (playlist) {
+      this.form.music_id = this.selectedTrack
+      this.form.playlist_id = playlist
+      await this.form.post('/api/add-music')
+      await this.$store.dispatch('music/fetchUserPlayLists')
+      this.$bvModal.hide('add-playlist')
+    },
+    addToPlaylistModal (track) {
       this.selectedTrack = track
-      this.selectedPlayList = ''
       this.$bvModal.show('add-playlist')
     },
     updateTrack (track) {
@@ -69,29 +89,7 @@ export default {
   })
 }
 </script>
-<style scoped>
-.top-right {
-  position: absolute;
-  right: 10px;
-  top: 18px;
-}
-
-.title {
-  font-size: 85px;
-}
-</style>
-<style scoped>
-.card {
-  justify-content: space-between;
-  flex-direction: initial;
-  display: flex;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
+<style lang="scss" scoped>
 img {
   width: 50px;
   height: 50px;

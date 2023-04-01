@@ -1,18 +1,25 @@
 <template>
   <div class="main-wrapper">
-    <b-modal id="create-playlist" title="BootstrapVue">
-      <form method="post" enctype="multipart/form-data" action="/api/playlists">
-        <input type="text" name="name">
-        <button type="submit">
-          Загрузить
-        </button>
-      </form>
+    <b-modal id="add-playlist" hide-footer hide-header>
+      <div>
+        <div>
+          <h2 class="title-add-music">
+            Добавить в плейлист
+          </h2>
+          <div class="form-container">
+            <input v-model="playListForm.name" type="text" class="input" placeholder="Введите название плейлиста">
+            <button class="btn-modal" @click="createPlaylist">
+              Добавить
+            </button>
+          </div>
+        </div>
+      </div>
     </b-modal>
-    <v-sidebar />
+    <v-sidebar/>
     <v-content>
       <div class="library-title">
         <h1>Плейлисты</h1>
-        <button class="library-add" @click="$bvModal.show('create-playlist')">
+        <button class="library-add" @click="$bvModal.show('add-playlist')">
           <svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
             <g fill="currentColor">
               <path
@@ -23,7 +30,7 @@
         </button>
       </div>
       <div class="library-wrapper">
-        <playlist-card v-for="item in playList" :key="item.id" :item="item" />
+        <playlist-card v-for="item in playList" :key="item.id" :item="item"/>
       </div>
     </v-content>
   </div>
@@ -32,6 +39,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import PlaylistCard from '../components/playlistCard'
+import Form from 'vform'
 
 export default {
   components: { PlaylistCard },
@@ -43,10 +51,21 @@ export default {
   },
 
   data: () => ({
-    title: window.config.appName
+    title: window.config.appName,
+    playListForm: new Form({
+      name: ''
+    })
   }),
   async mounted () {
     await this.$store.dispatch('music/fetchUserPlayLists')
+  },
+  methods: {
+    async createPlaylist () {
+      await this.playListForm.post('/api/playlists')
+      await this.$store.dispatch('music/fetchUserPlayLists')
+      this.$bvModal.hide('add-playlist')
+      this.playList.name = ''
+    }
   },
 
   computed: mapGetters({
