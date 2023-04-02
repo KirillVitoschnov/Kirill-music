@@ -101,7 +101,7 @@ export default {
   methods: {
     async logout () {
       await this.$store.dispatch('auth/logout')
-      this.$router.push({ name: 'welcome' })
+      this.$router.push({ name: 'main' })
     },
     onFileChange: function (e) {
       const files = e.target.files || e.dataTransfer.files
