@@ -61,7 +61,7 @@ export default {
   methods: {
     async upload () {
       await this.uploadTrack.post('/api/music/upload')
-      this.$bvModal.hide('add-playlist')
+      this.$bvModal.hide('upload-music')
     }
   },
   computed: mapGetters({
