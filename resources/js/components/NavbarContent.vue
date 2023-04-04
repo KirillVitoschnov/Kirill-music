@@ -24,7 +24,6 @@
         <label for="music-file">Выберите файл:</label>
         <b-form-file
           v-model="uploadTrack.music"
-          placeholder="Choose a file or drop it here..."
           drop-placeholder="Drop file here..."
         />
         <label for="playlist">Выберите плейлист:</label>
@@ -35,14 +34,6 @@
         </select>
         <input type="submit" value="Загрузить" class="form-submit">
       </form>
-      <!--      <form method="post" enctype="multipart/form-data" action="/api/music/upload">-->
-      <!--        <input type="text" name="title">-->
-      <!--        <input type="text" name="artist">-->
-      <!--        <input name="music" type="file">-->
-      <!--        <button type="submit">-->
-      <!--          Загрузить-->
-      <!--        </button>-->
-      <!--      </form>-->
     </b-modal>
   </nav>
 </template>

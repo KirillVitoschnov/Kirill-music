@@ -78,6 +78,7 @@ export default {
       this.$bvModal.show('add-playlist')
     },
     updateTrack (track) {
+      alert(track)
       this.SET_MUSIC_LIST(this.musicList)
     }
   },

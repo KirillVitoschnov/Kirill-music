@@ -14,6 +14,7 @@ export default [
 
   { path: '/home', name: 'home', component: page('home.vue') },
   { path: '/library', name: 'library', component: page('library.vue') },
+  { path: '/library/:id', name: 'playlist', component: page('playlistItem.vue') },
   { path: '/profile', name: 'profile', component: page('profile.vue') },
   { path: '/search', name: 'search', component: page('home.vue') },
   {

@@ -1,5 +1,6 @@
 .library {
   &-title {
+    margin: 3rem 0;
     display: flex;
     justify-content: space-between;
   }
@@ -8,10 +9,15 @@
     grid-template-columns: repeat(5, 1fr);
   }
   &-card{
+    text-decoration: none;
+    color: inherit;
     cursor: pointer;
     margin: 10px;
     display: flex;
     flex-direction: column;
+    &:hover{
+      color: inherit;
+    }
     img{
       user-select: none;
       pointer-events: none;

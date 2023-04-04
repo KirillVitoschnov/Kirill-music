@@ -3,12 +3,14 @@ import * as types from '../mutation-types'
 
 export const state = {
   musicList: [],
-  userPlaylists: []
+  userPlaylists: [],
+  currentPlaylist: null
 }
 
 export const getters = {
   getMusicList: state => state.musicList,
-  getUserPlaylists: state => state.userPlaylists
+  getUserPlaylists: state => state.userPlaylists,
+  getCurrentPlaylist: state => state.currentPlaylist
 }
 
 export const actions = {
@@ -16,6 +18,14 @@ export const actions = {
     try {
       const response = await axios.get('/api/playlists')
       commit('SET_USER_PLAY_LISTS', response.data.music)
+    } catch (error) {
+      console.log(error)
+    }
+  },
+  async fetchPlaylistById ({ commit }, playlistId) {
+    try {
+      const response = await axios.get(`/api/playlists/${playlistId}`)
+      commit('SET_CURRENT_PLAYLIST', response.data.music)
     } catch (error) {
       console.log(error)
     }
@@ -32,5 +42,6 @@ export const actions = {
 
 export const mutations = {
   [types.SET_MUSIC_LIST]: (state, musicList) => (state.musicList = musicList),
-  [types.SET_USER_PLAY_LISTS]: (state, userPlaylists) => (state.userPlaylists = userPlaylists)
+  [types.SET_USER_PLAY_LISTS]: (state, userPlaylists) => (state.userPlaylists = userPlaylists),
+  [types.SET_CURRENT_PLAYLIST]: (state, currentPlaylist) => (state.currentPlaylist = currentPlaylist)
 }
