@@ -9,10 +9,14 @@
     <b-modal id="add-playlist" hide-footer hide-header>
       <div>
         <div>
-          <h2 class="title-add-music">Добавить в плейлист</h2>
+          <h2 class="title-add-music">
+            Добавить в плейлист
+          </h2>
           <div class="form-container">
             <input v-model="playListForm.name" type="text" class="input" placeholder="Введите название плейлиста">
-            <button @click="createPlaylist" class="btn-modal">Добавить</button>
+            <button class="btn-modal" @click="createPlaylist">
+              Добавить
+            </button>
           </div>
           <div class="cards-playlist-wrapper">
             <div v-for="playlist in userPlaylists" :key="playlist.id" @click="addToPlaylist(playlist)">
@@ -78,8 +82,8 @@ export default {
       this.$bvModal.show('add-playlist')
     },
     updateTrack (track) {
-      alert(track)
-      this.SET_MUSIC_LIST(this.musicList)
+      this.$store.commit('music/SET_CURRENT_PLAYLIST', this.musicList)
+      this.$store.commit('music/SET_ACTIVE_TRACK', track)
     }
   },
 

@@ -10,6 +10,7 @@ export const UPDATE_USER = 'UPDATE_USER'
 export const SET_LOCALE = 'SET_LOCALE'
 
 // music.js
+export const SET_ACTIVE_TRACK = 'SET_ACTIVE_TRACK'
 export const FETCH_MUSIC = 'FETCH_MUSIC'
 export const SET_MUSIC_LIST = 'SET_MUSIC_LIST'
 export const SET_USER_PLAY_LISTS = 'SET_USER_PLAY_LISTS'

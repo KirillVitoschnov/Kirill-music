@@ -4,7 +4,8 @@ import * as types from '../mutation-types'
 export const state = {
   musicList: [],
   userPlaylists: [],
-  currentPlaylist: null
+  currentPlaylist: null,
+  currentActiveTrack: ''
 }
 
 export const getters = {
@@ -43,5 +44,6 @@ export const actions = {
 export const mutations = {
   [types.SET_MUSIC_LIST]: (state, musicList) => (state.musicList = musicList),
   [types.SET_USER_PLAY_LISTS]: (state, userPlaylists) => (state.userPlaylists = userPlaylists),
-  [types.SET_CURRENT_PLAYLIST]: (state, currentPlaylist) => (state.currentPlaylist = currentPlaylist)
+  [types.SET_CURRENT_PLAYLIST]: (state, currentPlaylist) => (state.currentPlaylist = currentPlaylist),
+  [types.SET_ACTIVE_TRACK]: (state, currentActiveTrack) => (state.currentActiveTrack = currentActiveTrack)
 }
