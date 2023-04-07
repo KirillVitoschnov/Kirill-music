@@ -62,6 +62,7 @@ export default {
     })
   }),
   async mounted () {
+    await this.$store.dispatch('music/fetchMusic')
     await this.$store.dispatch('music/fetchUserPlayLists')
   },
   methods: {

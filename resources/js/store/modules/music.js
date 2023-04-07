@@ -11,7 +11,8 @@ export const state = {
 export const getters = {
   getMusicList: state => state.musicList,
   getUserPlaylists: state => state.userPlaylists,
-  getCurrentPlaylist: state => state.currentPlaylist
+  getCurrentPlaylist: state => state.currentPlaylist,
+  getCurrentTrack: state => state.currentActiveTrack
 }
 
 export const actions = {

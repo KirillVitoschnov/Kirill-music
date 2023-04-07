@@ -1,17 +1,17 @@
-<template>
+<template v-if="musicList">
   <div class="player-wrapper">
     <div class="player-scale">
       <input v-model="audioTime" type="range" min="0" :max="Math.round(audioDuration)" @input.stop="seekAudio()">
     </div>
-    <audio ref="audio" :src="audioSrc?`/storage/${audioSrc}`:''" @timeupdate="updateTime" />
+    <audio ref="audio" :src="audioSrc?`/storage/${audioSrc}`:''" @timeupdate="updateTime"/>
     <div class="player-buttons">
       <div class="player-control-back" @click="prevTrack()">
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="30" viewBox="0 0 14 13"
              fill="none"
         >
           <g opacity="0.6">
-            <path d="M2.15179 6.5L12.8483 12.675L12.8483 0.324999L2.15179 6.5Z" fill="white" />
-            <rect x="2" y="12" width="2" height="11" transform="rotate(180 2 12)" fill="white" />
+            <path d="M2.15179 6.5L12.8483 12.675L12.8483 0.324999L2.15179 6.5Z" fill="white"/>
+            <rect x="2" y="12" width="2" height="11" transform="rotate(180 2 12)" fill="white"/>
           </g>
         </svg>
       </div>
@@ -20,7 +20,7 @@
              viewBox="0 0 23 30" fill="none"
         >
           <g>
-            <path d="M23 15L0 0V30L23 15Z" fill="white" />
+            <path d="M23 15L0 0V30L23 15Z" fill="white"/>
           </g>
         </svg>
       </div>
@@ -44,8 +44,8 @@
              fill="none"
         >
           <g opacity="0.6">
-            <path d="M11.8482 6.5L1.15173 0.325001V12.675L11.8482 6.5Z" fill="white" />
-            <rect x="12" y="1" width="2" height="11" fill="white" />
+            <path d="M11.8482 6.5L1.15173 0.325001V12.675L11.8482 6.5Z" fill="white"/>
+            <rect x="12" y="1" width="2" height="11" fill="white"/>
           </g>
         </svg>
       </div>
@@ -89,8 +89,8 @@
 </template>
 
 <script>
-
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
+import musicListItem from './MusicListItem'
 
 export default {
   name: 'VPlayer',
@@ -109,6 +109,12 @@ export default {
     }
   },
   watch: {
+    'musicList' () {
+      this.onChangePlaylist(false)
+    },
+    'currentTrackId' () {
+      this.onChangePlaylist(true)
+    },
     'audioTime' () {
       this.updateTime()
     },
@@ -130,15 +136,19 @@ export default {
       }
     }
   },
-  async mounted () {
-    await this.$store.dispatch('music/fetchMusic')
-    this.$refs.audio.volume = this.volume / 100
-    this.audioSrc = this.musicList[0].path
-    this.audioDuration = this.musicList[0].seconds
-    this.currentTrack = this.musicList[0]
-    this.setMediaSession(this.musicList[0])
-  },
   methods: {
+    onChangePlaylist (play) {
+      if (!play) {
+        this.$refs.audio.volume = this.volume / 100
+        this.audioSrc = this.musicList[0].path
+        this.audioDuration = this.musicList[0].seconds
+        this.currentTrack = this.musicList[0]
+        this.setMediaSession(this.musicList[0])
+        this.pauseAudio()
+      } else {
+        this.changeTrack(this.musicList.find(item => item.id === this.currentTrackId))
+      }
+    },
     setMediaSession (track) {
       if ('mediaSession' in navigator) {
         navigator.mediaSession.setActionHandler('play', this.playAudio)
@@ -183,10 +193,6 @@ export default {
         this.seekAudio()
         return
       }
-      this.pauseAudio()
-      this.audioTime = 0
-      this.audioDuration = 0
-      this.currentTime = 0
       const currentIndex = this.musicList.findIndex(track => track.path === this.audioSrc)
       let prevIndex = currentIndex - 1
       if (prevIndex < 0) {
@@ -218,6 +224,10 @@ export default {
       }
     },
     changeTrack (track) {
+      this.pauseAudio()
+      this.audioTime = 0
+      this.audioDuration = 0
+      this.currentTime = 0
       this.currentTrack = track
       this.audioSrc = track.path
       this.audioDuration = track.seconds
@@ -235,8 +245,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      musicList: 'music/getMusicList',
       authenticated: 'auth/check'
+    }),
+    ...mapState({
+      musicList: state => state.music.currentPlaylist,
+      currentTrackId: state => state.music.currentActiveTrack
     }),
     duration () {
       return this.formatTime(this.audioDuration)
