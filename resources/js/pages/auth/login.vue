@@ -1,5 +1,5 @@
 <template>
-  <div class="row" style="color: white">
+  <div class="row" style="color: white; margin-top: 10rem" >
     <div class="col-lg-7 m-auto">
       <form @submit.prevent="login" @keydown="form.onKeydown($event)">
         <!-- Email -->

@@ -7,7 +7,7 @@
     </div>
     <span class="music-action"> <b-dropdown id="dropdown-1" text="Действие">
       <b-dropdown-item @click="download('/storage/'+music.path, music.title+' '+music.artist)">Скачать</b-dropdown-item>
-      <b-dropdown-item @click="addToPlaylist">Добавить в плейлист</b-dropdown-item>
+      <b-dropdown-item v-if="user" @click="addToPlaylist">Добавить в плейлист</b-dropdown-item>
     </b-dropdown>
     </span>
 
@@ -15,17 +15,22 @@
   </div>
 </template>
 <script>
+import {mapGetters} from "vuex";
+
 export default {
   name: 'MusicListItem',
   props: ['music'],
-  created () {
+  created() {
 
   },
+  computed: mapGetters({
+    user: 'auth/user'
+  }),
   methods: {
-    addToPlaylist () {
+    addToPlaylist() {
       this.$emit('addToPlaylist', this.music.id);
     },
-    download (url, Filename) {
+    download(url, Filename) {
       fetch(url)
         .then(response => response.blob())
         .then(blob => {
@@ -41,7 +46,7 @@ export default {
           }, 0)
         })
     },
-    onTrackClick () {
+    onTrackClick() {
       this.$emit('setTrack', this.music.id)
     }
   }
