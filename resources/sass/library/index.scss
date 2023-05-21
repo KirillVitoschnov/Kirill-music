@@ -7,8 +7,10 @@
   &-wrapper{
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+    margin-bottom: 100px;
   }
   &-card{
+    width: 200px;
     text-decoration: none;
     color: inherit;
     cursor: pointer;
@@ -25,9 +27,11 @@
       height: auto;
     }
     span{
+      color: white;
       margin-top: 1rem;
       text-align: center;
-      font-size: 16px;
+      font-size: 32px;
+      font-weight: 500;
     }
     }
   &-add {

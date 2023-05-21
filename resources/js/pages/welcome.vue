@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 import Form from 'vform'
 
 export default {
@@ -46,8 +46,8 @@ export default {
 
   layout: 'basic',
 
-  metaInfo () {
-    return { title: this.$t('home') }
+  metaInfo() {
+    return {title: this.$t('home')}
   },
 
   data: () => ({
@@ -61,28 +61,28 @@ export default {
       playlist_id: ''
     })
   }),
-  async mounted () {
+  async mounted() {
     await this.$store.dispatch('music/fetchMusic')
     await this.$store.dispatch('music/fetchUserPlayLists')
   },
   methods: {
-    async createPlaylist () {
+    async createPlaylist() {
       await this.playListForm.post('/api/playlists')
       await this.$store.dispatch('music/fetchUserPlayLists')
       this.playListForm.name = ''
     },
-    async addToPlaylist (playlist) {
+    async addToPlaylist(playlist) {
       this.form.music_id = this.selectedTrack
       this.form.playlist_id = playlist
       await this.form.post('/api/add-music')
       await this.$store.dispatch('music/fetchUserPlayLists')
       this.$bvModal.hide('add-playlist')
     },
-    addToPlaylistModal (track) {
+    addToPlaylistModal(track) {
       this.selectedTrack = track
       this.$bvModal.show('add-playlist')
     },
-    updateTrack (track) {
+    updateTrack(track) {
       this.$store.commit('music/SET_CURRENT_PLAYLIST', this.musicList)
       this.$store.commit('music/SET_ACTIVE_TRACK', track)
     }

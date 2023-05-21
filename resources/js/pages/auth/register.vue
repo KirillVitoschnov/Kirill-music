@@ -12,8 +12,9 @@
           <div class="mb-3 row">
             <label class="col-md-3 col-form-label text-md-end">{{ $t('name') }}</label>
             <div class="col-md-7">
-              <input v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }" class="form-control" type="text" name="name">
-              <has-error :form="form" field="name" />
+              <input v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }" class="form-control"
+                     type="text" name="name">
+              <has-error :form="form" field="name"/>
             </div>
           </div>
 
@@ -21,8 +22,9 @@
           <div class="mb-3 row">
             <label class="col-md-3 col-form-label text-md-end">{{ $t('email') }}</label>
             <div class="col-md-7">
-              <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control" type="email" name="email">
-              <has-error :form="form" field="email" />
+              <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control"
+                     type="email" name="email">
+              <has-error :form="form" field="email"/>
             </div>
           </div>
 
@@ -30,8 +32,9 @@
           <div class="mb-3 row">
             <label class="col-md-3 col-form-label text-md-end">{{ $t('password') }}</label>
             <div class="col-md-7">
-              <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
-              <has-error :form="form" field="password" />
+              <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control"
+                     type="password" name="password">
+              <has-error :form="form" field="password"/>
             </div>
           </div>
 
@@ -39,8 +42,10 @@
           <div class="mb-3 row">
             <label class="col-md-3 col-form-label text-md-end">{{ $t('confirm_password') }}</label>
             <div class="col-md-7">
-              <input v-model="form.password_confirmation" :class="{ 'is-invalid': form.errors.has('password_confirmation') }" class="form-control" type="password" name="password_confirmation">
-              <has-error :form="form" field="password_confirmation" />
+              <input v-model="form.password_confirmation"
+                     :class="{ 'is-invalid': form.errors.has('password_confirmation') }" class="form-control"
+                     type="password" name="password_confirmation">
+              <has-error :form="form" field="password_confirmation"/>
             </div>
           </div>
 
@@ -62,14 +67,12 @@
 import Form from 'vform'
 
 export default {
-  components: {
-
-  },
+  components: {},
 
   middleware: 'guest',
 
-  metaInfo () {
-    return { title: this.$t('register') }
+  metaInfo() {
+    return {title: this.$t('register')}
   },
 
   data: () => ({
@@ -83,25 +86,25 @@ export default {
   }),
 
   methods: {
-    async register () {
+    async register() {
       // Register the user.
-      const { data } = await this.form.post('/api/register')
+      const {data} = await this.form.post('/api/register')
 
       // Must verify email fist.
       if (data.status) {
         this.mustVerifyEmail = true
       } else {
         // Log in the user.
-        const { data: { token } } = await this.form.post('/api/login')
+        const {data: {token}} = await this.form.post('/api/login')
 
         // Save the token.
-        this.$store.dispatch('auth/saveToken', { token })
+        this.$store.dispatch('auth/saveToken', {token})
 
         // Update the user.
-        await this.$store.dispatch('auth/updateUser', { user: data })
+        await this.$store.dispatch('auth/updateUser', {user: data})
 
         // Redirect home.
-        this.$router.push({ name: 'main' })
+        this.$router.push({name: 'main'})
       }
     }
   }

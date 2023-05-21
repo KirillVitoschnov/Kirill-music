@@ -16,9 +16,10 @@ class MusicController extends Controller
 {
     public function index()
     {
-        $music = Music::all();
+        $music = Music::latest()->get();
         return response()->json(['music' => $music], 200);
     }
+
 
     public function upload(Request $request)
     {

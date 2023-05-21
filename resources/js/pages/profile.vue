@@ -15,10 +15,6 @@
               <td> {{ user.email }}</td>
             </tr>
             <tr>
-              <td>Дата рождения</td>
-              <td> {{ user.birthdate | Dateify }}</td>
-            </tr>
-            <tr>
               <td>Редактировать</td>
               <td>
                 <button @click="$bvModal.show('profile-edit')">

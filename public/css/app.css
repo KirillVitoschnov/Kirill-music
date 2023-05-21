@@ -10829,6 +10829,8 @@ textarea.form-control-lg {
   width: 20%;
   min-height: 100vh;
   height: 100%;
+    margin-top: 11rem;
+}
 }
 
 .url-items-wrapper {

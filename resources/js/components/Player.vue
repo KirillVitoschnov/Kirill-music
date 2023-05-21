@@ -1,5 +1,5 @@
-<template v-if="musicList">
-  <div class="player-wrapper">
+<template>
+  <div v-show="audioSrc" class="player-wrapper">
     <div class="player-scale">
       <input v-model="audioTime" type="range" min="0" :max="Math.round(audioDuration)" @input.stop="seekAudio()">
     </div>
@@ -72,7 +72,7 @@
         </svg>
       </div>
       <div class="player-album">
-        <img class="music-logo_url" :src="`${currentTrack.logo_url}`">
+        <img v-show="currentTrack.logo_url" class="music-logo_url" :src="`${currentTrack.logo_url}`">
       </div>
       <div class="player-track-info">
         <span>{{ currentTrack.title }}</span>

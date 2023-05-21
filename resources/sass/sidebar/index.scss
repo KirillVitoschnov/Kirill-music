@@ -1,11 +1,12 @@
 .sidebar {
   width: 20%;
-  min-height: 100vh;
+  min-height: calc(199px + 100vh);
   height: 100%;
 }
 
 .url-items-wrapper {
-  margin-top: 124px;
+  position: absolute;
+  margin-top: 60px;
   display: flex;
   flex-direction: column;
 

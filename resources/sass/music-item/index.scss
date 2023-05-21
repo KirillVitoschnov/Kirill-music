@@ -1,14 +1,19 @@
 .music {
   &-item {
     margin-bottom: 10px;
-    padding: 10px ;
+    padding: 10px;
     cursor: pointer;
     color: #a7a7a7;
     display: flex;
     justify-content: space-between;
-border-radius: 10px;
+    border-radius: 10px;
+
     &:hover {
       background-color: #3a3a3a;
+    }
+
+    &:last-child {
+      margin-bottom: 100px;
     }
   }
 

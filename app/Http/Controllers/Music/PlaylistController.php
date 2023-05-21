@@ -15,11 +15,17 @@ class PlaylistController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $playlists = Playlist::where('user_id', $user->id)->with(['musics' => function ($query) {
-            $query->take(1);
-        }])->withCount('musics')->get();
+        $playlists = Playlist::where('user_id', $user->id)
+            ->with(['musics' => function ($query) {
+                $query->latest();
+            }])
+            ->withCount('musics')
+            ->latest()
+            ->get();
+
         return response()->json(['music' => $playlists], 200);
     }
+
 
     public function store(Request $request)
     {

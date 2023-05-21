@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row" style="color: white">
     <div class="col-lg-7 m-auto">
       <form @submit.prevent="login" @keydown="form.onKeydown($event)">
         <!-- Email -->
@@ -28,9 +28,9 @@
               {{ $t('remember_me') }}
             </checkbox>
 
-            <router-link :to="{ name: 'password.request' }" class="small ms-auto my-auto">
-              {{ $t('forgot_password') }}
-            </router-link>
+<!--            <router-link :to="{ name: 'password.request' }" class="small ms-auto my-auto">-->
+<!--              {{ $t('forgot_password') }}-->
+<!--            </router-link>-->
           </div>
         </div>
 
