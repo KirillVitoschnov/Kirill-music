@@ -89,13 +89,13 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import {mapState, mapGetters} from 'vuex'
 import musicListItem from './MusicListItem'
 
 export default {
   name: 'VPlayer',
 
-  data () {
+  data() {
     return {
       firstPlayed: false,
       play: false,
@@ -109,16 +109,24 @@ export default {
     }
   },
   watch: {
-    'musicList' () {
-      this.onChangePlaylist(false)
+    musicList: {
+      handler(newVal) {
+        this.onChangePlaylist(false);
+        if (!this.play) {
+          this.$refs.audio.pause()
+        } else {
+          this.$refs.audio.play()
+        }
+      },
+      deep: true
     },
-    'currentTrackId' () {
+    'currentTrackId'() {
       this.onChangePlaylist(true)
     },
-    'audioTime' () {
+    'audioTime'() {
       this.updateTime()
     },
-    'play' () {
+    'play'() {
       if (!this.play) {
         this.$refs.audio.pause()
       } else {
@@ -128,7 +136,7 @@ export default {
         }
       }
     },
-    'currentTime' () {
+    'currentTime'() {
       if (!this.isRepeat) {
         if (this.currentTime >= this.duration) {
           this.nextTrack()
@@ -137,7 +145,7 @@ export default {
     }
   },
   methods: {
-    onChangePlaylist (play) {
+    onChangePlaylist(play) {
       if (!play) {
         this.$refs.audio.volume = this.volume / 100
         this.audioSrc = this.musicList[0].path
@@ -149,7 +157,7 @@ export default {
         this.changeTrack(this.musicList.find(item => item.id === this.currentTrackId))
       }
     },
-    setMediaSession (track) {
+    setMediaSession(track) {
       if ('mediaSession' in navigator) {
         navigator.mediaSession.setActionHandler('play', this.playAudio)
         navigator.mediaSession.setActionHandler('pause', this.pauseAudio)
@@ -168,14 +176,14 @@ export default {
         })
       }
     },
-    repeatAudio () {
+    repeatAudio() {
       this.isRepeat = !this.isRepeat
       this.$refs.audio.loop = this.isRepeat
     },
-    setVolume () {
+    setVolume() {
       this.$refs.audio.volume = this.volume / 100
     },
-    nextTrack () {
+    nextTrack() {
       this.pauseAudio()
       this.audioTime = 0
       this.audioDuration = 0
@@ -187,7 +195,7 @@ export default {
       }
       this.changeTrack(this.musicList[nextIndex])
     },
-    prevTrack () {
+    prevTrack() {
       if (this.audioTime > 5) {
         this.audioTime = 0
         this.seekAudio()
@@ -200,7 +208,7 @@ export default {
       }
       this.changeTrack(this.musicList[prevIndex])
     },
-    playAudio () {
+    playAudio() {
       this.firstPlayed = true
       this.play = true
       this.$refs.audio.currentTime = this.audioTime
@@ -209,21 +217,27 @@ export default {
         this.$refs.audio.play()
       }
     },
-    pauseAudio () {
+    pauseAudio() {
       this.play = false
       this.$refs.audio.pause()
     },
-    updateTime () {
+    updateTime() {
+      if (!this.play) {
+        this.$refs.audio.pause()
+      } else {
+        this.$refs.audio.play()
+      }
       this.audioTime = this.$refs.audio.currentTime
       this.currentTime = this.formatTime(this.audioTime)
+
     },
-    seekAudio () {
+    seekAudio() {
       this.currentTime = this.formatTime(this.audioTime)
       if (this.play) {
         this.$refs.audio.currentTime = this.audioTime
       }
     },
-    changeTrack (track) {
+    changeTrack(track) {
       this.pauseAudio()
       this.audioTime = 0
       this.audioDuration = 0
@@ -234,7 +248,7 @@ export default {
       this.playAudio()
       this.setMediaSession(track)
     },
-    formatTime (time) {
+    formatTime(time) {
       const minutes = Math.floor(time / 60)
       let seconds = Math.floor(time % 60)
       if (seconds < 10) {
@@ -251,7 +265,7 @@ export default {
       musicList: state => state.music.currentPlaylist,
       currentTrackId: state => state.music.currentActiveTrack
     }),
-    duration () {
+    duration() {
       return this.formatTime(this.audioDuration)
     }
   }
